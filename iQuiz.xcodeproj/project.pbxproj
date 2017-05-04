@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		113417E81EBAB73B00DF0E1B /* QuestionManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113417E71EBAB73B00DF0E1B /* QuestionManagerViewController.swift */; };
+		113417EA1EBACCB600DF0E1B /* TopicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113417E91EBACCB600DF0E1B /* TopicController.swift */; };
+		113417EC1EBAD0C400DF0E1B /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113417EB1EBAD0C400DF0E1B /* QuestionViewController.swift */; };
+		113417EE1EBAD0D400DF0E1B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113417ED1EBAD0D400DF0E1B /* AnswerViewController.swift */; };
+		113417F01EBADD4700DF0E1B /* FinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113417EF1EBADD4700DF0E1B /* FinishedViewController.swift */; };
 		117F15CD1EB4163000CC5485 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117F15CC1EB4163000CC5485 /* AppDelegate.swift */; };
 		117F15D21EB4163000CC5485 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117F15D01EB4163000CC5485 /* Main.storyboard */; };
 		117F15D41EB4163000CC5485 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 117F15D31EB4163000CC5485 /* Assets.xcassets */; };
@@ -16,6 +21,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		113417E71EBAB73B00DF0E1B /* QuestionManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionManagerViewController.swift; sourceTree = "<group>"; };
+		113417E91EBACCB600DF0E1B /* TopicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicController.swift; sourceTree = "<group>"; };
+		113417EB1EBAD0C400DF0E1B /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		113417ED1EBAD0D400DF0E1B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		113417EF1EBADD4700DF0E1B /* FinishedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishedViewController.swift; sourceTree = "<group>"; };
 		117F15C91EB4163000CC5485 /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		117F15CC1EB4163000CC5485 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		117F15D11EB4163000CC5485 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +73,11 @@
 				117F15D81EB4163000CC5485 /* Info.plist */,
 				117F15DE1EB41DA200CC5485 /* TableViewController.swift */,
 				117F15E01EB428E300CC5485 /* TopicTableViewCell.swift */,
+				113417E71EBAB73B00DF0E1B /* QuestionManagerViewController.swift */,
+				113417E91EBACCB600DF0E1B /* TopicController.swift */,
+				113417EB1EBAD0C400DF0E1B /* QuestionViewController.swift */,
+				113417ED1EBAD0D400DF0E1B /* AnswerViewController.swift */,
+				113417EF1EBADD4700DF0E1B /* FinishedViewController.swift */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -139,8 +154,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				113417F01EBADD4700DF0E1B /* FinishedViewController.swift in Sources */,
+				113417E81EBAB73B00DF0E1B /* QuestionManagerViewController.swift in Sources */,
+				113417EE1EBAD0D400DF0E1B /* AnswerViewController.swift in Sources */,
 				117F15CD1EB4163000CC5485 /* AppDelegate.swift in Sources */,
+				113417EC1EBAD0C400DF0E1B /* QuestionViewController.swift in Sources */,
 				117F15E11EB428E300CC5485 /* TopicTableViewCell.swift in Sources */,
+				113417EA1EBACCB600DF0E1B /* TopicController.swift in Sources */,
 				117F15DF1EB41DA200CC5485 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,6 +325,7 @@
 				117F15DD1EB4163000CC5485 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
