@@ -120,12 +120,6 @@ class TopicController: NSObject {
         return self.topics[self.topicNumber]
     }
     
-    // TODO: How could I make this a function of question
-    // Need to pass a pointer?
-    func setCurrentQuestionUserAnswer(_ answer: Int){
-        self.topics[self.topicNumber].questions[self.questionNumber].userAnswer = answer
-    }
-    
 }
 
 class Topic: NSObject{
@@ -175,8 +169,8 @@ class Question: NSObject {
     }
     
     // Does nothing yet
-    func setUserAnswer(){
-        
+    func setUserAnswer(_ userAnswer: Int){
+        self.userAnswer = userAnswer
     }
 }
 

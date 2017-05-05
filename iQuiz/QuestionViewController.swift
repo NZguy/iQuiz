@@ -25,9 +25,8 @@ class QuestionViewController: UIViewController {
     }
     
     @IBAction func submitPressed(_ sender: Any) {
-        // If no answer is given we will default to the first for now
-        // TODO: Change this later
-        var userAnswer = 0
+        // -1 means unanswered
+        var userAnswer = -1
         for view in self.view.subviews as [UIView] {
             if let radioSwitch = view as? UISwitch {
                 if radioSwitch.isOn{
@@ -36,7 +35,7 @@ class QuestionViewController: UIViewController {
             }
         }
         
-        topic.setCurrentQuestionUserAnswer(userAnswer)
+        topic.getCurrentQuestion().setUserAnswer(userAnswer)
         
         nc.post(name: NSNotification.Name(rawValue: "questionSubmit"), object: nil)
     }
@@ -62,14 +61,16 @@ class QuestionViewController: UIViewController {
                 }
             }
         }
-        
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
         // Set all sliders to 0
         for view in self.view.subviews as [UIView] {
             if let radioSwitch = view as? UISwitch {
                 radioSwitch.setOn(false, animated: false)
             }
         }
-
     }
     
     override func didReceiveMemoryWarning() {
