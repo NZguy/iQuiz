@@ -51,7 +51,7 @@ class TableViewController: UITableViewController {
         
         cell.topicDescr.sizeToFit()
         //TODO: Make cell automatically compute height
-        //Question: What whould be the best way to do this
+        // https://www.raywenderlich.com/129059/self-sizing-table-view-cells
 
         return cell
     }
@@ -63,7 +63,6 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         topic.topicNumber = indexPath.row
         performSegue(withIdentifier: "questionSegue", sender: self)
     }

@@ -11,6 +11,12 @@ import UIKit
 class AnswerViewController: UIViewController {
 
     let nc = NotificationCenter.default
+    let topic = TopicController.sharedInstance
+    
+    @IBOutlet weak var questionText: UILabel!
+    @IBOutlet weak var answerLabel: UILabel!
+    @IBOutlet weak var resultLabel: UILabel!
+    
     
     @IBAction func answerPressed(_ sender: Any) {
         nc.post(name: NSNotification.Name(rawValue: "answerSubmit"), object: nil)
@@ -20,6 +26,18 @@ class AnswerViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let question = topic.getCurrentQuestion()
+        
+        questionText.text = question.questionText
+        answerLabel.text = question.answers[question.correctAnswer]
+        if question.correctAnswer == question.userAnswer{
+            resultLabel.text = "Correct! 😀"
+        }else{
+            resultLabel.text = "Incorrect 😫"
+        }
     }
     
     override func didReceiveMemoryWarning() {

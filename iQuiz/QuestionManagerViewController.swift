@@ -37,6 +37,10 @@ class QuestionManagerViewController: UIViewController {
         nc.addObserver(self, selector: #selector(answerSubmitted), name: NSNotification.Name(rawValue: "answerSubmit"), object: nil)
         nc.addObserver(self, selector: #selector(finishSubmitted), name: NSNotification.Name(rawValue: "finishSubmit"), object: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        topic.reset()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -45,6 +49,7 @@ class QuestionManagerViewController: UIViewController {
 
     func transitionViews(from: UIViewController?, to: UIViewController){
         
+        // TODO: Find a better animation
         UIView.beginAnimations("View Transition", context: nil)
         UIView.setAnimationDuration(0.4)
         UIView.setAnimationCurve(.easeInOut)
@@ -80,14 +85,12 @@ class QuestionManagerViewController: UIViewController {
     }
     
     func questionSubmitted(){
-        print("question submitted")
         transitionViews(from: questionVC, to: answerVC)
     }
     
     func answerSubmitted(){
-        print("answer submitted")
         if !topic.isLastQuestion(){
-            topic.questionNumber += 1
+            topic.setQuestionNum(topic.getQuestionNum() + 1)
             transitionViews(from: answerVC, to: questionVC)
         }else{
             transitionViews(from: answerVC, to: finishVC)
