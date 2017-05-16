@@ -56,7 +56,18 @@ class TableViewController: UITableViewController {
  
     @IBAction func settingsPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        
+        alert.addTextField { (textField) in
+            textField.text = self.topic.dataURL
+        }
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { [weak alert] (_) in
+            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            self.topic.dataURL = textField.text!
+            self.topic.loadDataFromWeb()
+            UserDefaults.standard.set(textField.text!, forKey: "dataURL")
+        }))
+        
         self.present(alert, animated: true, completion: nil)
     }
     

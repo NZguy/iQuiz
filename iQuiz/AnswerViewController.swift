@@ -33,7 +33,7 @@ class AnswerViewController: UIViewController {
         
         questionText.text = question.questionText
         answerLabel.text = question.answers![question.correctAnswer!]
-        if question.correctAnswer == question.userAnswer{
+        if question.isCorrect(){
             resultLabel.text = "Correct! 😀"
         }else{
             resultLabel.text = "Incorrect 😫"

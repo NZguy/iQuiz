@@ -12,59 +12,6 @@ import ObjectMapper
 
 class TopicController{
     
-    enum MyError : Error {
-        case RuntimeError(String)
-    }
-    
-    let mathQuestions = [
-        Question(
-            questionText: "What is 2+2?",
-            correctAnswer: 0,
-            answers: [
-                "4",
-                "22",
-                "An irrational number",
-                "Nobody knows"])
-    ]
-    
-    let marvelQuestions = [
-        Question(
-            questionText: "Who is Iron Man?",
-            correctAnswer: 0,
-            answers: [
-                "Tony Stark",
-                "Obadiah Stane",
-                "A rock hit by Megadeth",
-                "Nobody knows"]),
-        Question(
-            questionText: "Who founded the X-Men?",
-            correctAnswer: 1,
-            answers: [
-                "Tony Stark",
-                "Professor X",
-                "The X-Institute",
-                "Erik Lensherr"]),
-        Question(
-            questionText: "How did Spider-Man get his powers?",
-            correctAnswer: 0,
-            answers: [
-                "He was bitten by a radioactive spider",
-                "He ate a radioactive spider",
-                "He is a radioactive spider",
-                "He looked at a radioactive spider"])
-    ]
-    
-    let scienceQuestions = [
-        Question(
-            questionText: "What is fire?",
-            correctAnswer: 0,
-            answers: [
-                "One of the four classical elements",
-                "A magical reaction given to us by God",
-                "A band that hasn't yet been discovered",
-                "Fire! Fire! Fire! heh-heh"])
-    ]
-    
     let nc = NotificationCenter.default
     
     var topics: [Topic]
@@ -79,34 +26,20 @@ class TopicController{
         self.topicNumber = 0
         self.questionNumber = 0
         
-        
-        
-//        self.topics = [
-//            Topic(title: "Mathmatics",
-//                  descr: "Mathematics is the study of topics such as quantity, structure, space, and change. There is a range of views among mathematicians and philosophers as to the exact scope and definition of mathematics.",
-//                  iconName: "math",
-//                  questions: mathQuestions),
-//            Topic(title: "Marvel",
-//                  descr: "Marvel Comics is the common name and primary imprint of Marvel Worldwide Inc., formerly Marvel Publishing, Inc. and Marvel Comics Group, an American publisher of comic books and related media.",
-//                  iconName: "hero",
-//                  questions: marvelQuestions),
-//            Topic(title: "Science",
-//                  descr: "Science is a systematic enterprise that builds and organizes knowledge in the form of testable explanations and predictions about the universe.",
-//                  iconName: "science",
-//                  questions: scienceQuestions)]
-        
         self.topics = []
         
-        // Try to get data from store with a default fallback
+        // Try to get url data from store with a default fallback
         let dataURL = UserDefaults.standard.value(forKey: "dataURL")
         if dataURL != nil{
+            print("got url from store")
             self.dataURL = dataURL as! String
         }else{
             self.dataURL = "http://tednewardsandbox.site44.com/questions.json"
         }
         
-        // Try to get data from store
+        // Try to get topic data from store
         if let topicJSON = UserDefaults.standard.value(forKey: "topicJSON") as? String{
+            print("got topics from store")
             self.jsonToTopics(json: topicJSON)
         }
     }
@@ -148,7 +81,7 @@ class TopicController{
     
     func loadDataFromWeb() {
         
-        Alamofire.request(self.dataURL).responseJSON { response in
+        Alamofire.request(self.dataURL).responseString { response in
             
             switch response.result {
             case .success:
@@ -172,32 +105,39 @@ class TopicController{
         
     }
     
-    func jsonToTopics(json: Any?){
+    func jsonToTopics(json: String){
         // Parse json into topic objects and set self.topics
-        let topics = Mapper<Topic>().mapArray(JSONObject: json)
+        let topics = Mapper<Topic>().mapArray(JSONString: json)
         
-        for topic in topics!{
-            let title = topic.title
-            var iconName = "math" // replace with default in the future
-            switch title!{
-            case "Science!":
-                iconName = "science"
-            case "Marvel Super Heroes":
-                iconName = "hero"
-            case "Mathematics":
-                iconName = "math"
-            default:
-                print("why do I need a default with a statement in it")
-            }
-            topic.iconName = iconName
+        if topics != nil{
+            // Save to userdefaults
+            UserDefaults.standard.set(json, forKey: "topicJSON")
+
             
+            for topic in topics!{
+                let title = topic.title
+                var iconName = "math" // replace with default in the future
+                switch title!{
+                case "Science!":
+                    iconName = "science"
+                case "Marvel Super Heroes":
+                    iconName = "hero"
+                case "Mathematics":
+                    iconName = "math"
+                default:
+                    print("why do I need a default with a statement in it")
+                }
+                topic.iconName = iconName
+                
+            }
+            
+            self.topics = topics!
+            
+            nc.post(name: NSNotification.Name(rawValue: "topicsRefreshed"), object: nil)
+        }else{
+            self.nc.post(name: NSNotification.Name(rawValue: "downloadError"), object: nil)
         }
         
-        self.topics = topics!
-        
-        print(topics![1].questions![0])
-        
-        nc.post(name: NSNotification.Name(rawValue: "topicsRefreshed"), object: nil)
     }
     
 }
@@ -230,7 +170,7 @@ class Topic: Mappable{
         
         for question in self.questions!{
             if question.userAnswer != nil{
-                if question.userAnswer == question.correctAnswer{
+                if question.isCorrect(){
                     numberCorrect += 1
                 }
             }
@@ -258,10 +198,17 @@ class Question: Mappable {
         
     }
     
+    // Transform from string to int required
+    // http://stackoverflow.com/questions/35117916/using-alamofire-and-objectmapper-the-integer-value-always-zero
     func mapping(map: Map){
         questionText <- map["text"]
-        correctAnswer <- map["answer"]
+        correctAnswer <- (map["answer"], TransformOf<Int, String>(fromJSON: { Int($0!) }, toJSON: { $0.map { String($0) } }))
         answers <- map["answers"]
+    }
+    
+    func isCorrect() -> Bool {
+        // -1 needed to fix teds non zero based answer
+        return self.userAnswer! == (self.correctAnswer! - 1)
     }
     
     // Does nothing yet
