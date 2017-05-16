@@ -211,6 +211,10 @@ class Question: Mappable {
         return self.userAnswer! == (self.correctAnswer! - 1)
     }
     
+    func getCorrectAnswer() -> String{
+        return self.answers![self.correctAnswer! - 1]
+    }
+    
     // Does nothing yet
     func setUserAnswer(_ userAnswer: Int){
         self.userAnswer = userAnswer
