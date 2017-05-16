@@ -26,7 +26,7 @@ class TableViewController: UITableViewController {
         nc.addObserver(self, selector: #selector(topicsRefreshed), name: NSNotification.Name(rawValue: "topicsRefreshed"), object: nil)
         nc.addObserver(self, selector: #selector(downloadError), name: NSNotification.Name(rawValue: "downloadError"), object: nil)
         
-        
+        self.refreshControl?.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         
         
     }
@@ -89,6 +89,10 @@ class TableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    func handleRefresh(refreshControl: UIRefreshControl){
+        topic.loadDataFromWeb()
+        refreshControl.endRefreshing()
+    }
     
 
 }
