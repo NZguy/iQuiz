@@ -28,7 +28,7 @@ class FinishedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         let numberCorrect = topic.getCurrentTopic().getNumberCorrect()
-        let numberOfQuestions = topic.getCurrentTopic().questions.count
+        let numberOfQuestions = topic.getCurrentTopic().questions!.count
         
         scoreLabel.text = "\(numberCorrect) of \(numberOfQuestions) correct."
         

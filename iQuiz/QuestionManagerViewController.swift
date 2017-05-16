@@ -50,6 +50,7 @@ class QuestionManagerViewController: UIViewController {
     func transitionViews(from: UIViewController?, to: UIViewController){
         
         // TODO: Find a better animation
+        // https://www.raywenderlich.com/110536/custom-uiviewcontroller-transitions
         UIView.beginAnimations("View Transition", context: nil)
         UIView.setAnimationDuration(0.4)
         UIView.setAnimationCurve(.easeInOut)

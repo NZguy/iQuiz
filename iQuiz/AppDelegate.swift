@@ -5,6 +5,7 @@
 //  Created by Duncan Andrew on 4/28/17.
 //  Copyright © 2017 Duncan Andrew. All rights reserved.
 //
+//TODO: Use AlamoFire for http requests
 
 import UIKit
 

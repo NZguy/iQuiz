@@ -57,7 +57,7 @@ class QuestionViewController: UIViewController {
                 if label.restorationIdentifier == "questionText"{
                     label.text = question.questionText
                 }else{
-                    label.text = question.answers[label.tag]
+                    label.text = question.answers![label.tag]
                 }
             }
         }
